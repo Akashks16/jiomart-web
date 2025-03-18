@@ -5,6 +5,7 @@ const JioMartProductList = ({ products, onViewOrder, setProducts }) => {
   // const [products, setProducts] = useState(initialProducts);
 
   const [searchParams, setSearchParams] = useState();
+  const [filterProduct, setFilterProduct] = useState(products ?? []);
 
   // Function to handle quantity changes
   const updateQuantity = (id, change) => {
@@ -21,10 +22,37 @@ const JioMartProductList = ({ products, onViewOrder, setProducts }) => {
 
   useEffect(() => {
     const handleMessage = (event) => {
-      if (event.data?.type === "Search_product") {
+      console.log("Received search request:1", event.data.payload);
+      if (event.data?.type === "SEARCH_PRODUCT") {
         console.log("Received search request:", event.data.payload);
-        setSearchParams(event?.data?.payload);
-        // Handle the search logic here
+        // setSearchParams(event?.data?.payload);
+        let prodList = [];
+        if (
+          event?.data?.payload &&
+          Array.isArray(event?.data?.payload?.product) &&
+          event?.data?.payload?.product.length > 0
+        ) {
+          event?.data?.payload?.product.map((_prod) => {
+            const findProd = prodList.find(
+              (_product) => _product?.name === _prod
+            );
+            if (!findProd)
+              prodList = [
+                ...prodList,
+                {
+                  id: "493857048",
+                  name: _prod,
+                  mrp: 12.0,
+                  jioMartPrice: 10.59,
+                  quantity: 0,
+                  category: "",
+                },
+              ];
+            return true;
+          });
+          // Handle the search logic here
+          setFilterProduct(prodList);
+        }
       }
     };
 
@@ -35,10 +63,21 @@ const JioMartProductList = ({ products, onViewOrder, setProducts }) => {
     };
   }, []);
 
-  let filterProduct = products;
-  if (searchParams) {
-    filterProduct = products?.filter((_prod) => _prod?.id === searchParams?.id);
-  }
+  // let filterProduct
+  // if (searchParams && Array.isArray(searchParams?.product) && searchParams?.product.length > 0) {
+  //   searchParams?.product.map(_prod => {
+  //     filterProduct = [
+  //       {
+  //         id: "493857048",
+  //         name: _prod,
+  //         mrp: 12.0,
+  //         jioMartPrice: 10.59,
+  //         quantity: 0,
+  //         category: "",
+  //       },
+  //     ]
+  //   })
+  // }
 
   // console.log("products: ", initialProducts);
 

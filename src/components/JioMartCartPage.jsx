@@ -79,7 +79,19 @@ const JioMartCartPage = ({ onBackToProducts, cartItems: selectedProducts }) => {
         ))}
 
         <div className="confirm-order-section">
-          <button className="confirm-order-btn">Confirm Order</button>
+          <button
+            className="confirm-order-btn"
+            onClick={() => {
+              window.postMessage(
+                {
+                  type: "checkout",
+                },
+                "*"
+              );
+            }}
+          >
+            Confirm Order
+          </button>
         </div>
       </div>
     </div>

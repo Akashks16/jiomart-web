@@ -57,11 +57,7 @@ const JioMartApp = () => {
     setCurrentPage("cartPage");
     window.postMessage(
       {
-        type: "Cart_page",
-        payload: {
-          id: "493857048",
-          name: "Sunfeast YiPPee Instant Noodles Magic Masala 60 g",
-        },
+        type: "view_order",
       },
       "*"
     );
