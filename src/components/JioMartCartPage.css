@@ -1,0 +1,159 @@
+/* Main Container */
+.cart-container {
+  width: 100vw;
+  /* max-width: 1200px; */
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.cart-header {
+  background-color: #8b0000;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-icon {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  margin-right: 10px;
+}
+
+.cart-logo h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.cart-links {
+  font-size: 14px;
+}
+
+/* Cart Content */
+.cart-content {
+  background-color: #f9f9f9;
+  flex: 1;
+  padding: 20px;
+}
+
+/* Cart Item */
+.cart-item {
+  background-color: white;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.item-name {
+  font-size: 16px;
+  margin: 0 0 10px 0;
+  font-weight: normal;
+}
+
+.item-price-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 5px;
+}
+
+.mrp {
+  font-size: 14px;
+  color: #555;
+}
+
+.jiomart-price {
+  font-size: 14px;
+  color: #8b0000;
+  font-weight: 500;
+}
+
+.item-code-row {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #555;
+  position: relative;
+}
+
+.code-label {
+  margin-right: 5px;
+}
+
+/* Quantity Control */
+.quantity-control {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 0;
+}
+
+.qty-label {
+  margin-right: 10px;
+}
+
+.qty-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background-color: #8b0000;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qty-input {
+  width: 40px;
+  height: 30px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 0 5px;
+}
+
+/* Confirm Order Section */
+.confirm-order-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.confirm-order-btn {
+  background-color: #8b0000;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .item-code-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .quantity-control {
+    position: static;
+    margin-top: 10px;
+  }
+}
