@@ -5,59 +5,67 @@ const JioMartProductList = ({ products, onViewOrder, setProducts }) => {
   // const [products, setProducts] = useState(initialProducts);
 
   const [searchParams, setSearchParams] = useState();
-  const [filterProduct, setFilterProduct] = useState(products ?? []);
+  // const [products, setProducts] = useState([]); // Make sure products state is initialized
+  const [filterProduct, setFilterProduct] = useState([]);
 
-  // Function to handle quantity changes
-  const updateQuantity = (id, change) => {
-    setProducts(
-      products.map((product) => {
-        if (product.id === id) {
-          const newQuantity = Math.max(0, product.quantity + change);
-          return { ...product, quantity: newQuantity };
-        }
-        return product;
-      })
+  // ✅ Update `products` only when `searchParams` change
+  useEffect(() => {
+    if (searchParams?.product?.length > 0) {
+      setProducts((prevProducts) => {
+        let prodData = [...prevProducts];
+
+        searchParams.product.forEach((_prod) => {
+          const existingProduct = prevProducts.find((p) => p.name === _prod);
+
+          if (!existingProduct) {
+            prodData.push({
+              id: "493857048",
+              name: _prod,
+              mrp: 12.0,
+              jioMartPrice: 10.59,
+              quantity: 0,
+              category: "",
+            });
+          }
+        });
+
+        return prodData;
+      });
+    }
+  }, [searchParams]); // ✅ Depend only on `searchParams`
+
+  // ✅ Keep filterProduct updated separately
+  useEffect(() => {
+    if (searchParams?.product?.length > 0) {
+      setFilterProduct(
+        products.filter((p) => searchParams.product.includes(p.name))
+      );
+    } else {
+      setFilterProduct(products);
+    }
+  }, [products, searchParams]); // ✅ Depend on `products` so updates render correctly
+
+  // ✅ Keep updateQuantity function unchanged
+  const updateQuantity = (name, change) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.name === name
+          ? { ...product, quantity: Math.max(0, product.quantity + change) }
+          : product
+      )
     );
   };
 
+  // ✅ Listen for messages
   useEffect(() => {
     const handleMessage = (event) => {
-      console.log("Received search request:1", event.data.payload);
       if (event.data?.type === "SEARCH_PRODUCT") {
         console.log("Received search request:", event.data.payload);
-        // setSearchParams(event?.data?.payload);
-        let prodList = [];
-        if (
-          event?.data?.payload &&
-          Array.isArray(event?.data?.payload?.product) &&
-          event?.data?.payload?.product.length > 0
-        ) {
-          event?.data?.payload?.product.map((_prod) => {
-            const findProd = prodList.find(
-              (_product) => _product?.name === _prod
-            );
-            if (!findProd)
-              prodList = [
-                ...prodList,
-                {
-                  id: "493857048",
-                  name: _prod,
-                  mrp: 12.0,
-                  jioMartPrice: 10.59,
-                  quantity: 0,
-                  category: "",
-                },
-              ];
-            return true;
-          });
-          // Handle the search logic here
-          setFilterProduct(prodList);
-        }
+        setSearchParams(event?.data?.payload);
       }
     };
 
     window.addEventListener("message", handleMessage);
-
     return () => {
       window.removeEventListener("message", handleMessage);
     };
@@ -144,7 +152,7 @@ const JioMartProductList = ({ products, onViewOrder, setProducts }) => {
                   <div className="quantity-controls">
                     <span>Qty</span>
                     <button
-                      onClick={() => updateQuantity(product.id, -1)}
+                      onClick={() => updateQuantity(product.name, -1)}
                       className="quantity-btn decrease"
                     >
                       -
@@ -156,7 +164,7 @@ const JioMartProductList = ({ products, onViewOrder, setProducts }) => {
                       readOnly
                     />
                     <button
-                      onClick={() => updateQuantity(product.id, 1)}
+                      onClick={() => updateQuantity(product.name, 1)}
                       className="quantity-btn increase"
                     >
                       +
