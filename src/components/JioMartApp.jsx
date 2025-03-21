@@ -10,7 +10,7 @@ const JioMartApp = () => {
   const [products, setProducts] = useState([
     {
       id: "493857048",
-      name: "Sunfeast YiPPee Instant Noodles Magic Masala 60 g",
+      name: "Maggi",
       mrp: 12.0,
       jioMartPrice: 10.59,
       quantity: 0,
@@ -26,7 +26,7 @@ const JioMartApp = () => {
     },
     {
       id: "490985424",
-      name: "Saffola Classic Instant Masala Oats 38 g",
+      name: "Aashirvad",
       mrp: 17.0,
       jioMartPrice: 15.2,
       quantity: 0,
@@ -34,7 +34,7 @@ const JioMartApp = () => {
     },
     {
       id: "491458246",
-      name: "Cadbury Celebrations 144.1 G",
+      name: "Parle",
       mrp: 145.0,
       jioMartPrice: 127.3,
       quantity: 0,
@@ -42,7 +42,7 @@ const JioMartApp = () => {
     },
     {
       id: "491227606",
-      name: "Cadbury Celebrations Chocolate Gift Pack 59.8 g",
+      name: "Hide & Seek",
       mrp: 50.0,
       jioMartPrice: 43.9,
       quantity: 0,
