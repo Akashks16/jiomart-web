@@ -15,12 +15,14 @@ const JioMartProductList = ({ products, onViewOrder, setProducts }) => {
         let prodData = [...prevProducts];
 
         searchParams.product.forEach((_prod) => {
-          const existingProduct = prevProducts.find((p) => p.name === _prod);
+          const existingProduct = prevProducts.find((p) => p.brandId === _prod);
+
+          console.log("existingProduct: ", existingProduct);
 
           if (!existingProduct) {
             prodData.push({
-              id: "493857048",
-              name: _prod,
+              brandId: "493857048",
+              brandDescEN: _prod,
               mrp: 12.0,
               jioMartPrice: 10.59,
               quantity: 0,
@@ -28,6 +30,8 @@ const JioMartProductList = ({ products, onViewOrder, setProducts }) => {
             });
           }
         });
+
+        console.log("prodData: ", prodData);
 
         return prodData;
       });
@@ -38,7 +42,7 @@ const JioMartProductList = ({ products, onViewOrder, setProducts }) => {
   useEffect(() => {
     if (searchParams?.product?.length > 0) {
       setFilterProduct(
-        products.filter((p) => searchParams.product.includes(p.name))
+        products.filter((p) => searchParams.product.includes(p.brandId))
       );
     } else {
       setFilterProduct(products);
@@ -49,7 +53,7 @@ const JioMartProductList = ({ products, onViewOrder, setProducts }) => {
   const updateQuantity = (name, change) => {
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
-        product.name === name
+        product.brandDescEN === name
           ? { ...product, quantity: Math.max(0, product.quantity + change) }
           : product
       )
@@ -133,8 +137,8 @@ const JioMartProductList = ({ products, onViewOrder, setProducts }) => {
         <div className="product-list">
           {filterProduct &&
             filterProduct.map((product) => (
-              <div key={product.id} className="product-item">
-                <h3 className="product-name">{product.name}</h3>
+              <div key={product.brandId} className="product-item">
+                <h3 className="product-name">{product.brandDescEN}</h3>
                 <div className="product-details">
                   <div className="price-details">
                     <div className="price-row">
@@ -146,13 +150,13 @@ const JioMartProductList = ({ products, onViewOrder, setProducts }) => {
                       </span>
                     </div>
                     <div className="product-code">
-                      <span>Code: {product.id}</span>
+                      <span>Code: {product.brandId}</span>
                     </div>
                   </div>
                   <div className="quantity-controls">
                     <span>Qty</span>
                     <button
-                      onClick={() => updateQuantity(product.name, -1)}
+                      onClick={() => updateQuantity(product.brandDescEN, -1)}
                       className="quantity-btn decrease"
                     >
                       -
@@ -164,7 +168,7 @@ const JioMartProductList = ({ products, onViewOrder, setProducts }) => {
                       readOnly
                     />
                     <button
-                      onClick={() => updateQuantity(product.name, 1)}
+                      onClick={() => updateQuantity(product.brandDescEN, 1)}
                       className="quantity-btn increase"
                     >
                       +

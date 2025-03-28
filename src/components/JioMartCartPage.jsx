@@ -41,7 +41,7 @@ const JioMartCartPage = ({ onBackToProducts, cartItems: selectedProducts }) => {
       <div className="cart-content">
         {cartItems.map((item) => (
           <div key={item.id} className="cart-item">
-            <h3 className="item-name">{item.name}</h3>
+            <h3 className="item-name">{item.brandDescEN}</h3>
             <div className="item-price-row">
               <span className="mrp">MRP Rs. {item.mrp.toFixed(2)}</span>
               <span className="jiomart-price">
@@ -50,11 +50,11 @@ const JioMartCartPage = ({ onBackToProducts, cartItems: selectedProducts }) => {
             </div>
             <div className="item-code-row">
               <span className="code-label">Code : </span>
-              <span className="code-value">{item.id}</span>
+              <span className="code-value">{item.brandId}</span>
               <div className="quantity-control">
                 <span className="qty-label">Qty</span>
                 <button
-                  onClick={() => updateQuantity(item.id, -1)}
+                  onClick={() => updateQuantity(item.brandId, -1)}
                   className="qty-btn decrease"
                 >
                   -
@@ -63,7 +63,7 @@ const JioMartCartPage = ({ onBackToProducts, cartItems: selectedProducts }) => {
                   type="text"
                   value={item.quantity}
                   onChange={(e) =>
-                    handleQuantityChange(item.id, e.target.value)
+                    handleQuantityChange(item.brandId, e.target.value)
                   }
                   className="qty-input"
                 />
